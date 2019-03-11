@@ -19,9 +19,10 @@ public class UserDao {
 		                   addAnnotatedClass(UserEntity.class).
 		                   buildSessionFactory();
 			  UserDao dao=new UserDao();
-			  dao.addUser();
-			  dao.deleteUser();
-			 // dao.getUser();
+		//	  dao.addUser();
+		//	  dao.deleteUser();
+			  dao.getUser("4");
+			  dao.updateUser("1");
 		      } catch (Throwable ex) { 
 		         System.err.println("Failed to create sessionFactory object." + ex);
 		         throw new ExceptionInInitializerError(ex); 
@@ -78,12 +79,52 @@ public class UserDao {
 	      System.out.println("yes");
 	    //  return uID;
 	   }
-	 public void getUser() {
-		
+	 public User getUser( String id) {
+		 Session session = sessionFactory.openSession();
+	      Transaction tx = null;
+	      User user=null;
+	      UserEntity userEntity=new UserEntity();
+	      try {
+		         tx = session.beginTransaction();
+		          
+		      //    userEntity.get
+		    
+		           userEntity=(UserEntity) session.get(UserEntity.class, id);
+		         tx.commit();
+		      } catch (HibernateException e) {
+		    	  System.out.println("in catch");
+		         if (tx!=null) tx.rollback();
+		         e.printStackTrace(); 
+		      } finally {
+		         session.close();
+		      }
+	      
+	      System.out.println("get:  "+userEntity.getName());
+	      return null;
 	 }
 	 
-	 public void updateUser(){
-	     
+	 public void updateUser(String id){
+		 Session session = sessionFactory.openSession();
+	      Transaction tx = null;
+	      User user=null;
+	      UserEntity userEntity=new UserEntity();
+	      try {
+		         tx = session.beginTransaction();
+		          
+		      //    userEntity.get
+		    
+		           userEntity=(UserEntity) session.get(UserEntity.class, id);
+		           userEntity.setName("qqq");
+		         tx.commit();
+		      } catch (HibernateException e) {
+		    	  System.out.println("in catch");
+		         if (tx!=null) tx.rollback();
+		         e.printStackTrace(); 
+		      } finally {
+		         session.close();
+		      }
+	      
+	      System.out.println("updated");
 	   }
 
 }
