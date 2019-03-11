@@ -82,7 +82,6 @@ public class UserDao {
 	 public User getUser( String id) {
 		 Session session = sessionFactory.openSession();
 	      Transaction tx = null;
-	      User user=null;
 	      UserEntity userEntity=new UserEntity();
 	      try {
 		         tx = session.beginTransaction();
@@ -106,7 +105,6 @@ public class UserDao {
 	 public void updateUser(String id){
 		 Session session = sessionFactory.openSession();
 	      Transaction tx = null;
-	      User user=null;
 	      UserEntity userEntity=new UserEntity();
 	      try {
 		         tx = session.beginTransaction();
